@@ -2,6 +2,8 @@ import pytest
 import requests
 from selene import browser, have
 
+from utils.logger import log_request
+
 BASE_URL = "https://demowebshop.tricentis.com"
 LOGIN_URL = f"{BASE_URL}/login"
 CART_URL = f"{BASE_URL}/cart"
@@ -16,13 +18,14 @@ session = requests.Session()
 # Фикстура для авторизации
 @pytest.fixture(scope="session")
 def login():
-    """Авторизация пользователя перед всеми тестами."""
+    """Авторизация пользователя перед тестами"""
     login_data = {
         "Email": EMAIL,
         "Password": PASSWORD,
         "RememberMe": False
     }
     response = session.post(LOGIN_URL, data=login_data)
+    log_request(response)
     assert response.status_code == 200
 
 

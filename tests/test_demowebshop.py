@@ -5,6 +5,7 @@ from selene import browser
 
 from pages.cart_page import CartPage
 from tests.conftest import session
+from utils.logger import log_request
 
 BASE_URL = "https://demowebshop.tricentis.com"
 
@@ -19,6 +20,7 @@ def add_product_to_cart(product_url):
     """Добавляет товар в корзину через API"""
     with step("Добавляем товар в корзину"):
         response = session.post(product_url)
+        log_request(response)
         assert response.status_code == 200
 
 
