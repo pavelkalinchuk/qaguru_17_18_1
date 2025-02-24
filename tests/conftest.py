@@ -2,12 +2,10 @@ import pytest
 import requests
 from selene import browser, have
 
-# Конфигурация
 BASE_URL = "https://demowebshop.tricentis.com"
 LOGIN_URL = f"{BASE_URL}/login"
 CART_URL = f"{BASE_URL}/cart"
 
-# Данные пользователя
 EMAIL = "auto_tester@tester.qa"
 PASSWORD = "!234Qwer"
 
@@ -28,10 +26,9 @@ def login():
     assert response.status_code == 200
 
 
-# Фикстура для очистки корзины
 @pytest.fixture
 def clear_cart():
-    """Очистка корзины перед каждым тестом."""
+    """Очистка корзины перед каждым тестом"""
     browser.open(CART_URL)
     items = browser.all(".cart-item-row")
     if items.with_(timeout=2).matching(have.size_greater_than(0)):
